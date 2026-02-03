@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HousingLocation } from '../models/housing-location';
 
+// providedIn: 'root' hace el servicio singleton disponible en toda la app sin importarlo
 @Injectable({
   providedIn: 'root'
 })
@@ -9,19 +10,18 @@ export class HousingService {
 
   constructor() { }
 
-  // Obtener todas las casas
+  // async/await: notacion moderna de promesas para codigo asincronico mas legible
   async getAllHousingLocations(): Promise<HousingLocation[]> {
     const data = await fetch(this.url);
     return await data.json() ?? [];
   }
 
-  // Obtener una casa por ID
+  // async/await: esperar respuesta de fetch sin bloquear codigo, manejo de datos asincronos
   async getHousingLocationById(id: number): Promise<HousingLocation | undefined> {
     const data = await fetch(`${this.url}/${id}`);
     return await data.json() ?? undefined;
   }
 
-  // Guardar solicitud en LocalStorage
   submitApplication(firstName: string, lastName: string, email: string) {
     const application = {
       firstName,
@@ -29,12 +29,12 @@ export class HousingService {
       email,
       date: new Date().toISOString()
     };
-    
+
+    // localStorage: guardar datos en navegador para persistencia entre sesiones
     localStorage.setItem('housingApplication', JSON.stringify(application));
-    console.log('Solicitud guardada:', application);
   }
 
-  // Obtener solicitud guardada
+  // localStorage: recuperar datos guardados localmente en el navegador
   getSavedApplication() {
     const saved = localStorage.getItem('housingApplication');
     return saved ? JSON.parse(saved) : null;

@@ -1,71 +1,73 @@
 <article>
+  <!-- routerLink: navegar a rutas sin recargar pagina, mantiene estado de la SPA -->
   <a [routerLink]="['/']" class="back-link">← Volver al inicio</a>
 
+  <!-- @if: sintaxis de control de flujo moderna de Angular para renderizado condicional -->
   @if (housingLocation) {
     <section class="listing-details">
       <img class="listing-photo" [src]="housingLocation.photo" alt="Exterior photo of {{housingLocation.name}}">
-      
+
       <div class="listing-info">
         <h2>{{ housingLocation.name }}</h2>
-        <p class="location">📍 {{ housingLocation.city }}, {{ housingLocation.state }}</p>
-        
+        <p class="location">{{ housingLocation.city }}, {{ housingLocation.state }}</p>
+
         <div class="price-section">
           <span class="price">${{ housingLocation.price }}/mes</span>
+          <!-- [class.xxx]: vincula clase CSS dinamica al resultado de expresion (true/false) -->
           <span class="availability" [class.available]="housingLocation.available" [class.unavailable]="!housingLocation.available">
-            {{ housingLocation.available ? '✓ Disponible' : '✗ No disponible' }}
+            {{ housingLocation.available ? 'Disponible' : 'No disponible' }}
           </span>
         </div>
 
         <div class="features">
-          <h3>Características:</h3>
+          <h3>Caracteristicas:</h3>
           <ul>
-            <li>🏠 {{ housingLocation.availableUnits }} unidades disponibles</li>
+            <li>{{ housingLocation.availableUnits }} unidades disponibles</li>
             @if (housingLocation.wifi) {
-              <li>📶 WiFi incluido</li>
+              <li>WiFi incluido</li>
             } @else {
-              <li>❌ Sin WiFi</li>
+              <li>Sin WiFi</li>
             }
             @if (housingLocation.laundry) {
-              <li>🧺 Lavandería disponible</li>
+              <li>Lavanderia disponible</li>
             } @else {
-              <li>❌ Sin lavandería</li>
+              <li>Sin lavanderia</li>
             }
           </ul>
         </div>
 
-        <!-- CLIMA -->
         @if (weatherData) {
           <div class="weather-section">
-            <h3>🌤️ Clima actual:</h3>
+            <h3>Clima actual:</h3>
             <div class="weather-info">
               <img [src]="weatherData.current.condition.icon" alt="Weather icon">
               <div>
                 <p class="temperature">{{ weatherData.current.temp_c }}°C</p>
                 <p class="condition">{{ weatherData.current.condition.text }}</p>
-                <p class="feels-like">Sensación térmica: {{ weatherData.current.feelslike_c }}°C</p>
+                <p class="feels-like">Sensacion termica: {{ weatherData.current.feelslike_c }}°C</p>
               </div>
             </div>
           </div>
         } @else {
           <div class="weather-section">
-            <p>⏳ Cargando información del clima...</p>
+            <p>Cargando informacion del clima...</p>
           </div>
         }
       </div>
     </section>
   }
 
-  <!-- FORMULARIO DE SOLICITUD -->
   <section class="application-form">
-    <h2>Solicitar información</h2>
-    <p class="form-description">Complete el formulario para recibir más información sobre esta propiedad.</p>
-    
+    <h2>Solicitar informacion</h2>
+    <p class="form-description">Complete el formulario para recibir mas informacion sobre esta propiedad.</p>
+
     <form [formGroup]="applyForm" (ngSubmit)="submitApplication()">
+      <!-- [formGroup]: vincula template con FormGroup para validacion reactiva -->
       <div class="form-group">
         <label for="first-name">Nombre *</label>
-        <input 
-          id="first-name" 
-          type="text" 
+        <input
+          id="first-name"
+          type="text"
           formControlName="firstName"
           [class.invalid]="isFieldInvalid('firstName')"
           placeholder="Ingresa tu nombre">
@@ -76,9 +78,9 @@
 
       <div class="form-group">
         <label for="last-name">Apellido *</label>
-        <input 
-          id="last-name" 
-          type="text" 
+        <input
+          id="last-name"
+          type="text"
           formControlName="lastName"
           [class.invalid]="isFieldInvalid('lastName')"
           placeholder="Ingresa tu apellido">
@@ -89,9 +91,9 @@
 
       <div class="form-group">
         <label for="email">Email *</label>
-        <input 
-          id="email" 
-          type="email" 
+        <input
+          id="email"
+          type="email"
           formControlName="email"
           [class.invalid]="isFieldInvalid('email')"
           placeholder="ejemplo@email.com">
@@ -105,6 +107,6 @@
       </button>
     </form>
 
-    <p class="form-note">* Los datos del formulario se guardarán automáticamente en tu navegador</p>
+    <p class="form-note">* Los datos del formulario se guardaran automaticamente en tu navegador</p>
   </section>
 </article>

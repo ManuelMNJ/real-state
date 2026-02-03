@@ -4,6 +4,7 @@ import { HousingLocationComponent } from '../housing-location/housing-location';
 import { HousingLocation } from '../models/housing-location';
 import { HousingService } from '../services/housing';
 
+// Componente standalone: se registra directamente sin necesidad de NgModule
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -13,6 +14,7 @@ import { HousingService } from '../services/housing';
 })
 export class HomeComponent {
   housingLocationList: HousingLocation[] = [];
+  // inject(): inyeccion de dependencias sin constructor, requerido en standalone
   housingService: HousingService = inject(HousingService);
   filteredLocationList: HousingLocation[] = [];
 

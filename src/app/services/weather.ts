@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+// providedIn: 'root' hace el servicio singleton disponible en toda la app sin importarlo
 @Injectable({
   providedIn: 'root'
 })
@@ -9,19 +10,18 @@ export class WeatherService {
 
   constructor() { }
 
+  // async/await: esperar respuesta de API de clima de forma no bloqueante
   async getWeather(lat: number, lon: number): Promise<any> {
     try {
       const url = `${this.baseUrl}?key=${this.apiKey}&q=${lat},${lon}`;
       const response = await fetch(url);
-      
+
       if (!response.ok) {
-        console.error('Error al obtener clima');
         return null;
       }
-      
+
       return await response.json();
     } catch (error) {
-      console.error('Error:', error);
       return null;
     }
   }

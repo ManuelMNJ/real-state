@@ -1,3 +1,4 @@
+// Interface: define contrato tipado para datos de propiedades, garantiza seguridad de tipos en TS
 export interface HousingLocation {
   id: number;
   name: string;

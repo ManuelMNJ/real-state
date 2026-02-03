@@ -6,6 +6,7 @@
 </section>
 
 <section class="results">
+  <!-- [property]: property binding vincula dato a componente hijo para pasarle informacion -->
   <app-housing-location 
     *ngFor="let housingLocation of filteredLocationList" 
     [housingLocation]="housingLocation">

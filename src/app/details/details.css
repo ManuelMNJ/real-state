@@ -97,7 +97,6 @@ h2 {
   border-bottom: 1px solid #eee;
 }
 
-/* CLIMA */
 .weather-section {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -137,7 +136,6 @@ h2 {
   opacity: 0.9;
 }
 
-/* FORMULARIO */
 .application-form {
   background: white;
   border-radius: 12px;
