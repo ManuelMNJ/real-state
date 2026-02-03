@@ -1,0 +1,110 @@
+<article>
+  <a [routerLink]="['/']" class="back-link">← Volver al inicio</a>
+
+  @if (housingLocation) {
+    <section class="listing-details">
+      <img class="listing-photo" [src]="housingLocation.photo" alt="Exterior photo of {{housingLocation.name}}">
+      
+      <div class="listing-info">
+        <h2>{{ housingLocation.name }}</h2>
+        <p class="location">📍 {{ housingLocation.city }}, {{ housingLocation.state }}</p>
+        
+        <div class="price-section">
+          <span class="price">${{ housingLocation.price }}/mes</span>
+          <span class="availability" [class.available]="housingLocation.available" [class.unavailable]="!housingLocation.available">
+            {{ housingLocation.available ? '✓ Disponible' : '✗ No disponible' }}
+          </span>
+        </div>
+
+        <div class="features">
+          <h3>Características:</h3>
+          <ul>
+            <li>🏠 {{ housingLocation.availableUnits }} unidades disponibles</li>
+            @if (housingLocation.wifi) {
+              <li>📶 WiFi incluido</li>
+            } @else {
+              <li>❌ Sin WiFi</li>
+            }
+            @if (housingLocation.laundry) {
+              <li>🧺 Lavandería disponible</li>
+            } @else {
+              <li>❌ Sin lavandería</li>
+            }
+          </ul>
+        </div>
+
+        <!-- CLIMA -->
+        @if (weatherData) {
+          <div class="weather-section">
+            <h3>🌤️ Clima actual:</h3>
+            <div class="weather-info">
+              <img [src]="weatherData.current.condition.icon" alt="Weather icon">
+              <div>
+                <p class="temperature">{{ weatherData.current.temp_c }}°C</p>
+                <p class="condition">{{ weatherData.current.condition.text }}</p>
+                <p class="feels-like">Sensación térmica: {{ weatherData.current.feelslike_c }}°C</p>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <div class="weather-section">
+            <p>⏳ Cargando información del clima...</p>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
+  <!-- FORMULARIO DE SOLICITUD -->
+  <section class="application-form">
+    <h2>Solicitar información</h2>
+    <p class="form-description">Complete el formulario para recibir más información sobre esta propiedad.</p>
+    
+    <form [formGroup]="applyForm" (ngSubmit)="submitApplication()">
+      <div class="form-group">
+        <label for="first-name">Nombre *</label>
+        <input 
+          id="first-name" 
+          type="text" 
+          formControlName="firstName"
+          [class.invalid]="isFieldInvalid('firstName')"
+          placeholder="Ingresa tu nombre">
+        @if (isFieldInvalid('firstName')) {
+          <span class="error-message">{{ getErrorMessage('firstName') }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="last-name">Apellido *</label>
+        <input 
+          id="last-name" 
+          type="text" 
+          formControlName="lastName"
+          [class.invalid]="isFieldInvalid('lastName')"
+          placeholder="Ingresa tu apellido">
+        @if (isFieldInvalid('lastName')) {
+          <span class="error-message">{{ getErrorMessage('lastName') }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email"
+          [class.invalid]="isFieldInvalid('email')"
+          placeholder="ejemplo@email.com">
+        @if (isFieldInvalid('email')) {
+          <span class="error-message">{{ getErrorMessage('email') }}</span>
+        }
+      </div>
+
+      <button type="submit" class="primary" [disabled]="applyForm.invalid">
+        Enviar solicitud
+      </button>
+    </form>
+
+    <p class="form-note">* Los datos del formulario se guardarán automáticamente en tu navegador</p>
+  </section>
+</article>

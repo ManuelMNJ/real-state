@@ -1,0 +1,23 @@
+<section class="listing">
+  <img class="listing-photo" [src]="housingLocation.photo" alt="Exterior photo of {{housingLocation.name}}">
+  
+  <div class="listing-content">
+    <h2 class="listing-heading">{{ housingLocation.name }}</h2>
+    <p class="listing-location">{{ housingLocation.city}}, {{housingLocation.state }}</p>
+    
+    <div class="listing-details">
+      <span class="price">${{ housingLocation.price }}/mes</span>
+      <span class="availability" [class.available]="housingLocation.available" [class.unavailable]="!housingLocation.available">
+        {{ housingLocation.available ? '✓ Disponible' : '✗ No disponible' }}
+      </span>
+    </div>
+    
+    <div class="listing-features">
+      <span *ngIf="housingLocation.wifi">📶 WiFi</span>
+      <span *ngIf="housingLocation.laundry">🧺 Lavandería</span>
+      <span>🏠 {{ housingLocation.availableUnits }} unidades</span>
+    </div>
+    
+    <a [routerLink]="['/details', housingLocation.id]">Ver detalles</a>
+  </div>
+</section>
