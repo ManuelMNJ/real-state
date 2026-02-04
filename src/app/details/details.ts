@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HousingService } from '../services/housing';
@@ -6,7 +6,6 @@ import { WeatherService } from '../services/weather';
 import { HousingLocation } from '../models/housing-location';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-// Componente standalone: no necesita NgModule, se registra directamente en rutas
 @Component({
   selector: 'app-details',
   standalone: true,
@@ -14,46 +13,52 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './details.html',
   styleUrl: './details.css'
 })
-export class DetailsComponent {
-  // inject() inyecta dependencias sin necesidad de constructor, mejor para standalone
+export class DetailsComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
+  // inject(): inyeccion sin constructor, util en componentes standalone
+  // permite obtener dependencias de forma mas declarativa
   housingService = inject(HousingService);
+  // inject(): obtener servicio singleton sin usar constructor
   weatherService = inject(WeatherService);
-  cdr = inject(ChangeDetectorRef);
 
-  housingLocation: HousingLocation | undefined;
-  weatherData: any = null;
+  // signal(): estado reactivo local que se lee llamando la funcion (housingLocation())
+  // se usa para actualizar la vista de forma explicita y evitar dependencias de NgZone
+  housingLocation = signal<HousingLocation | undefined>(undefined);
+  // signal(): contenedor reactivo para datos del clima, se actualiza con .set()
+  weatherData = signal<any>(null);
 
-  // FormGroup y FormControl: Reactive Forms para control robusto y reactive del formulario
   applyForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email])
   });
+  // FormGroup y FormControl: formularios reactivos que permiten validacion y control fino
+  // Validators: reglas de validacion declarativas aplicadas en el modelo del formulario
 
-  constructor() {
-    // ActivatedRoute con snapshot.params: obtener ID de URL para cargar datos especificos
+  ngOnInit() {
+    // ngOnInit: inicializacion que necesita acceder a ActivatedRoute y servicios
+    // se ejecuta una vez creado el componente
+    // snapshot.params: acceso sincrono a parametros de ruta (id) cuando no se necesita reaccionar a cambios
     const housingLocationId = Number(this.route.snapshot.params['id']);
 
-    // async/await con fetch: cargar datos de API y actualizar vista manualmente
-    this.housingService.getHousingLocationById(housingLocationId).then(housingLocation => {
-      this.housingLocation = housingLocation;
-      this.cdr.detectChanges();
+    this.housingService.getHousingLocationById(housingLocationId).then(location => {
+      // .set(): actualiza el Signal para notificar a la vista del nuevo valor
+      this.housingLocation.set(location);
 
-      if (housingLocation && this.weatherService.apiKey !== 'TU_API_KEY_AQUI') {
+      if (location && this.weatherService.apiKey !== 'TU_API_KEY_AQUI') {
         this.weatherService.getWeather(
-          housingLocation.coordinates.latitude,
-          housingLocation.coordinates.longitude
+          location.coordinates.latitude,
+          location.coordinates.longitude
         ).then(weather => {
-          this.weatherData = weather;
-          this.cdr.detectChanges();
+            // .set(): actualiza signal con los datos recibidos del servicio de clima
+            this.weatherData.set(weather);
         });
       }
     });
 
     const savedData = this.housingService.getSavedApplication();
     if (savedData) {
-      // patchValue: actualizar FormGroup parcialmente sin validar campos omitidos
+      // patchValue: actualiza solo los campos especificados sin resetear todo el FormGroup
       this.applyForm.patchValue({
         firstName: savedData.firstName,
         lastName: savedData.lastName,
@@ -69,7 +74,7 @@ export class DetailsComponent {
         this.applyForm.value.lastName ?? '',
         this.applyForm.value.email ?? ''
       );
-      alert('¡Solicitud enviada correctamente! Los datos se han guardado.');
+      alert('Solicitud enviada correctamente. Los datos se han guardado.');
     } else {
       alert('Por favor, completa todos los campos correctamente.');
     }
@@ -86,7 +91,7 @@ export class DetailsComponent {
       return 'Este campo es obligatorio';
     }
     if (field?.hasError('email')) {
-      return 'Email inválido';
+      return 'Email invalido';
     }
     return '';
   }

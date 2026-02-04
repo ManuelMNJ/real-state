@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { HousingLocationComponent } from '../housing-location/housing-location';
 import { HousingLocation } from '../models/housing-location';
 import { HousingService } from '../services/housing';
+import { RouterModule } from '@angular/router';
 
 // Componente standalone: se registra directamente sin necesidad de NgModule
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HousingLocationComponent],
+  imports: [CommonModule, HousingLocationComponent, RouterModule],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

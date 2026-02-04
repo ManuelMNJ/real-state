@@ -1,44 +1,59 @@
-section {
-  margin-bottom: 2rem;
-}
-
-form {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
+.results {
+  display: grid;
+  column-gap: 14px;
+  row-gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
+  margin-top: 50px;
+  justify-content: space-around;
 }
 
 input[type="text"] {
-  flex: 1;
-  padding: 0.75rem;
-  border: 2px solid #ddd;
+  border: solid 1px var(--primary-color);
+  padding: 10px;
   border-radius: 8px;
-  font-size: 1rem;
+  margin-right: 4px;
+  display: inline-block;
+  width: 30%;
 }
 
-input[type="text"]:focus {
-  outline: none;
-  border-color: #605DC8;
-}
-
-button.primary {
-  padding: 0.75rem 2rem;
-  background: linear-gradient(135deg, #605DC8 0%, #8B89E6 100%);
+button {
+  padding: 10px;
+  border: solid 1px var(--primary-color);
+  background: var(--primary-color);
   color: white;
-  border: none;
   border-radius: 8px;
-  font-size: 1rem;
+}
+
+@media (min-width: 500px) and (max-width: 768px) {
+  .results {
+      grid-template-columns: repeat(2, 1fr);
+  }
+  input[type="text"] {
+      width: 70%;
+  }   
+}
+
+@media (max-width: 499px) {
+  .results {
+      grid-template-columns: 1fr;
+  }    
+}
+.add-button-container {
+  margin-bottom: 2rem;
+  text-align: right;
+}
+
+.btn-add {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
   font-weight: 600;
-  cursor: pointer;
   transition: transform 0.2s;
 }
 
-button.primary:hover {
+.btn-add:hover {
   transform: translateY(-2px);
-}
-
-.results {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
 }

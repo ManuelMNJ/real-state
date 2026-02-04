@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  // standalone: true permite declarar el componente sin necesidad de un NgModule
+  // facilita arquitecturas modulares con componentes independientes
   standalone: true,
   imports: [RouterModule],
   template: `

@@ -3,32 +3,33 @@
   <a [routerLink]="['/']" class="back-link">← Volver al inicio</a>
 
   <!-- @if: sintaxis de control de flujo moderna de Angular para renderizado condicional -->
-  @if (housingLocation) {
+  <!-- leer signal con parentesis: housingLocation() devuelve el valor actual del signal -->
+@if (housingLocation(); as location) {
     <section class="listing-details">
-      <img class="listing-photo" [src]="housingLocation.photo" alt="Exterior photo of {{housingLocation.name}}">
+      <img class="listing-photo" [src]="location.photo" alt="Exterior photo of {{location.name}}">
 
       <div class="listing-info">
-        <h2>{{ housingLocation.name }}</h2>
-        <p class="location">{{ housingLocation.city }}, {{ housingLocation.state }}</p>
+        <h2>{{ location.name }}</h2>
+        <p class="location">{{ location.city }}, {{ location.state }}</p>
 
         <div class="price-section">
-          <span class="price">${{ housingLocation.price }}/mes</span>
+          <span class="price">${{ location.price }}/mes</span>
           <!-- [class.xxx]: vincula clase CSS dinamica al resultado de expresion (true/false) -->
-          <span class="availability" [class.available]="housingLocation.available" [class.unavailable]="!housingLocation.available">
-            {{ housingLocation.available ? 'Disponible' : 'No disponible' }}
+          <span class="availability" [class.available]="location.available" [class.unavailable]="!location.available">
+            {{ location.available ? 'Disponible' : 'No disponible' }}
           </span>
         </div>
 
         <div class="features">
           <h3>Caracteristicas:</h3>
           <ul>
-            <li>{{ housingLocation.availableUnits }} unidades disponibles</li>
-            @if (housingLocation.wifi) {
+            <li>{{ location.availableUnits }} unidades disponibles</li>
+            @if (location.wifi) {
               <li>WiFi incluido</li>
             } @else {
               <li>Sin WiFi</li>
             }
-            @if (housingLocation.laundry) {
+            @if (location.laundry) {
               <li>Lavanderia disponible</li>
             } @else {
               <li>Sin lavanderia</li>
@@ -36,15 +37,16 @@
           </ul>
         </div>
 
-        @if (weatherData) {
+        <!-- @if: usa valor del signal weatherData() para mostrar datos del clima si existen -->
+        @if (weatherData(); as weather) {
           <div class="weather-section">
             <h3>Clima actual:</h3>
             <div class="weather-info">
-              <img [src]="weatherData.current.condition.icon" alt="Weather icon">
+              <img [src]="weather.current.condition.icon" alt="Weather icon">
               <div>
-                <p class="temperature">{{ weatherData.current.temp_c }}°C</p>
-                <p class="condition">{{ weatherData.current.condition.text }}</p>
-                <p class="feels-like">Sensacion termica: {{ weatherData.current.feelslike_c }}°C</p>
+                <p class="temperature">{{ weather.current.temp_c }}°C</p>
+                <p class="condition">{{ weather.current.condition.text }}</p>
+                <p class="feels-like">Sensacion termica: {{ weather.current.feelslike_c }}°C</p>
               </div>
             </div>
           </div>
@@ -102,6 +104,7 @@
         }
       </div>
 
+      <!-- [disabled]: deshabilita el boton cuando la expresion es true para evitar envios invalidos -->
       <button type="submit" class="primary" [disabled]="applyForm.invalid">
         Enviar solicitud
       </button>

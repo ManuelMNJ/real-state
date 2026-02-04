@@ -1,219 +1,71 @@
-article {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 2rem;
-  color: #605DC8;
-  text-decoration: none;
-  font-weight: 600;
-  transition: transform 0.2s;
-}
-
-.back-link:hover {
-  transform: translateX(-5px);
-}
-
-.listing-details {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin-bottom: 2rem;
-}
-
 .listing-photo {
-  width: 100%;
-  height: 400px;
+  height: 600px;
+  width: 50%;
   object-fit: cover;
+  border-radius: 30px;
+  float: right;
 }
 
-.listing-info {
-  padding: 2rem;
+.listing-heading {
+  font-size: 48pt;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
-h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 0.5rem;
+.listing-location::before {
+  content: url('/assets/location-pin.svg') / '';
 }
 
-.location {
-  font-size: 1.125rem;
-  color: #666;
-  margin-bottom: 1.5rem;
+.listing-location {
+  font-size: 24pt;
+  margin-bottom: 15px;
 }
 
-.price-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 8px;
+.listing-features > .section-heading {
+  color: var(--secondary-color);
+  font-size: 24pt;
+  margin-bottom: 15px;
 }
 
-.price {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #605DC8;
+.listing-features {
+  margin-bottom: 20px;
 }
 
-.availability {
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: 600;
+.listing-features li {
+  font-size: 14pt;
 }
 
-.available {
-  background: #d4edda;
-  color: #155724;
+li {
+  list-style-type: none;
 }
 
-.unavailable {
-  background: #f8d7da;
-  color: #721c24;
+.listing-apply .section-heading {
+  font-size: 18pt;
+  margin-bottom: 15px;
 }
 
-.features {
-  margin-bottom: 2rem;
+label, input {
+  display: block;
 }
-
-.features h3 {
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-.features ul {
-  list-style: none;
-  padding: 0;
-}
-
-.features li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #eee;
-}
-
-.weather-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  margin-top: 2rem;
-}
-
-.weather-section h3 {
-  margin-bottom: 1rem;
-}
-
-.weather-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.weather-info img {
-  width: 64px;
-  height: 64px;
-}
-
-.temperature {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-.condition {
-  font-size: 1.125rem;
-  margin: 0.25rem 0;
-}
-
-.feels-like {
-  font-size: 0.875rem;
-  opacity: 0.9;
-}
-
-.application-form {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.application-form h2 {
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-.form-description {
-  color: #666;
-  margin-bottom: 2rem;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
 label {
-  display: block;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 0.5rem;
+  color: var(--secondary-color);
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12pt;
 }
-
 input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s;
+  font-size: 16pt;
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 400px;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: solid .3px;
 }
-
-input:focus {
-  outline: none;
-  border-color: #605DC8;
-}
-
-input.invalid {
-  border-color: #dc3545;
-}
-
-.error-message {
-  display: block;
-  color: #dc3545;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-}
-
-button.primary {
-  width: 100%;
-  padding: 1rem;
-  background: linear-gradient(135deg, #605DC8 0%, #8B89E6 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.125rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-button.primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-}
-
-button.primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.form-note {
-  margin-top: 1rem;
-  font-size: 0.875rem;
-  color: #666;
-  font-style: italic;
+@media (max-width: 1024px) {
+  .listing-photo {
+    width: 100%;
+    height: 400px;
+  }
 }
