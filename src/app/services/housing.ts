@@ -22,12 +22,15 @@ export class HousingService {
     return await data.json() ?? undefined;
   }
 
-  submitApplication(firstName: string, lastName: string, email: string) {
+  submitApplication(firstName: string, lastName: string, phone:string, email: string, date: string, text:string, check:string,) {
     const application = {
       firstName,
       lastName,
+      phone,
       email,
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
+      text,
+      check
     };
 
     // localStorage: guardar datos en navegador para persistencia entre sesiones

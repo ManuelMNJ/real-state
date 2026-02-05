@@ -97,6 +97,7 @@
       "state": "OR",
       "photo": "https://angular.io/assets/images/tutorials/faa/webaliser-_TPTXZd9mOo-unsplash.jpg",
       "availableUnits": 6,
+      "price":3,
       "wifi": true,
       "laundry": true
     },
@@ -133,7 +134,7 @@
       }
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "adasdasd",
       "city": "asdada",
       "state": "dasdasda",
@@ -149,7 +150,7 @@
       }
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "adawdaww1",
       "city": "213 123",
       "state": "312313",
@@ -165,7 +166,7 @@
       }
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "weqeqe",
       "city": "qweqweq",
       "state": "qeqwe",

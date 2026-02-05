@@ -23,17 +23,39 @@ export class HomeComponent {
     this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
       this.housingLocationList = housingLocationList;
       this.filteredLocationList = housingLocationList;
+      
     });
   }
 
-  filterResults(text: string) {
+  filterResults(text: string, checkbox: boolean, order: string) {
     if (!text) {
       this.filteredLocationList = this.housingLocationList;
       return;
+    }
+    
+       
+  if(!checkbox.valueOf){
+      this.filteredLocationList = this.housingLocationList;
+      return;
+    }
+    
+    if(order==="asc"){
+      this.filteredLocationList =this.housingLocationList.sort()
     }
   
     this.filteredLocationList = this.housingLocationList.filter(
       housingLocation => housingLocation?.city.toLowerCase().includes(text.toLowerCase())
     );
+ 
+
+    this.filteredLocationList = this.housingLocationList.filter(
+      housingLocation => housingLocation?.available === true
+    )
+
+
+
   }
+
+ 
+  
 }

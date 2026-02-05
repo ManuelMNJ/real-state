@@ -1,21 +1,37 @@
-
 <div class="add-button-container">
   <!-- routerLink: navegar dentro de la SPA sin recargar la pagina -->
   <a routerLink="/new" class="btn-add">+ Anadir nueva vivienda</a>
 </div>
 
 <section>
-  
-<section>
-  <form>
-    <input type="text" placeholder="Filter by city" #filter>
-    <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
-  </form>
-</section>
+  <section>
+    <form>
+      <input type="text" placeholder="Filter by city" #filter />
 
-<section class="results">
-  <app-housing-location 
-    *ngFor="let housingLocation of filteredLocationList" 
-    [housingLocation]="housingLocation">
-  </app-housing-location>
+      <label>
+        <input type="checkbox" #filterCheck />
+        Disponible
+      </label>
+
+      <select type="select" #filterOrder>
+        <option value="asc">Precio Asc</option>
+        <option value="desc">Precio Desc</option>
+      </select>
+      <button
+        class="primary"
+        type="button"
+        (click)="filterResults(filter.value, filterCheck.checked, filterOrder.value)"
+      >
+        Search
+      </button>
+    </form>
+  </section>
+
+  <section class="results">
+    <app-housing-location
+      *ngFor="let housingLocation of filteredLocationList"
+      [housingLocation]="housingLocation"
+    >
+    </app-housing-location>
+  </section>
 </section>

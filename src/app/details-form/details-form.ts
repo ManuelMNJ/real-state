@@ -10,10 +10,10 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   selector: 'app-details',
   standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
-  templateUrl: './details.html',
-  styleUrl: './details.css'
+  templateUrl: './details-form.html',
+  styleUrl: './details-form.css'
 })
-export class DetailsComponent implements OnInit {
+export class DetailsFormComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
   // inject(): inyeccion sin constructor, util en componentes standalone
   // permite obtener dependencias de forma mas declarativa
@@ -30,7 +30,12 @@ export class DetailsComponent implements OnInit {
   applyForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email])
+    phone: new FormControl('',[Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    date : new FormControl('',[Validators.required]),
+    text : new FormControl('',[Validators.required]),
+    check: new FormControl('',[Validators.required])
+
   });
   // FormGroup y FormControl: formularios reactivos que permiten validacion y control fino
   // Validators: reglas de validacion declarativas aplicadas en el modelo del formulario
@@ -62,8 +67,47 @@ export class DetailsComponent implements OnInit {
       this.applyForm.patchValue({
         firstName: savedData.firstName,
         lastName: savedData.lastName,
-        email: savedData.email
+        phone:savedData.phone,
+        email: savedData.email,
+        date :savedData.date,
+        text: savedData.text,
+        check : savedData.check
+
       });
     }
+  }
+
+  submitApplication() {
+    if (this.applyForm.valid) {
+      this.housingService.submitApplication(
+        this.applyForm.value.firstName ?? '',
+        this.applyForm.value.lastName ?? '',
+        this.applyForm.value.phone ?? '',
+        this.applyForm.value.email ?? '',
+        this.applyForm.value.date ?? '',
+        this.applyForm.value.text ?? '',
+        this.applyForm.value.check ?? '',
+
+      );
+      alert('Solicitud enviada correctamente. Los datos se han guardado.');
+    } else {
+      alert('Por favor, completa todos los campos correctamente.');
+    }
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.applyForm.get(fieldName);
+    return !!(field && field.invalid && field.touched);
+  }
+
+  getErrorMessage(fieldName: string): string {
+    const field = this.applyForm.get(fieldName);
+    if (field?.hasError('required')) {
+      return 'Este campo es obligatorio';
+    }
+    if (field?.hasError('email')) {
+      return 'Email invalido';
+    }
+    return '';
   }
 }
